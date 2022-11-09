@@ -1,7 +1,9 @@
 package cz.asterionsoft.ffmpegwrapper.easy;
 
 
-public class EasyWrapper {
+import java.util.List;
+
+class EasyWrapper {
 
 	private final CmdExecutor executor;
 
@@ -63,5 +65,9 @@ public class EasyWrapper {
 	private void commonRun(String template, String... paramsInCorrectOrder) {
 		String command = String.format(template, (Object[]) paramsInCorrectOrder);
 		executor.run(command);
+	}
+
+	List<String> getLastRunOuput() {
+		return executor.getLastRunOutput();
 	}
 }
