@@ -1,6 +1,6 @@
-package cz.asterionsoft.ffmpegwrapper.easy;
+package cz.asterionsoft.ffmpegwrapper.service;
 
-import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * probably can not be parallelized! needs to finish step by step!
  */
+@Component
 class CmdExecutor {
 	private final List<String> lastRunOutput = new ArrayList<>();
 

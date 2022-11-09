@@ -1,19 +1,17 @@
-package cz.asterionsoft.ffmpegwrapper.easy;
+package cz.asterionsoft.ffmpegwrapper.service;
 
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
+@RequiredArgsConstructor
 class EasyWrapper {
 
 	private final CmdExecutor executor;
 
-	public EasyWrapper() {
-		this.executor = new CmdExecutor();
-	}
-
-	public EasyWrapper(CmdExecutor executor) {
-		this.executor = executor;
-	}
 
 	/**
 	 * "ffmpeg -i input.mp4 -ss 00:05:20 -t 00:10:00 -c:v copy -c:a copy output1.mp4"

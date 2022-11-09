@@ -1,26 +1,15 @@
-package cz.asterionsoft.ffmpegwrapper.easy;
+package cz.asterionsoft.ffmpegwrapper.service;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class VideoBuilder {
-
-	/**
-	 * singleton
-	 */
-	private static final VideoBuilder INSTANCE = new VideoBuilder();
-
 	private final Context context;
-
 	private final EasyWrapper wrapper;
-
-	public static VideoBuilder getInstance() {
-		return INSTANCE;
-	}
-
-	private VideoBuilder() {
-		this.wrapper = new EasyWrapper();
-		this.context = new Context();
-	}
 
 
 	public VideoBuilder version() {
