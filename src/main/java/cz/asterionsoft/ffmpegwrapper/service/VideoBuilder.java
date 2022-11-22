@@ -18,7 +18,7 @@ public class VideoBuilder {
 	}
 
 	public List<String> getLastRunOutput() {
-		return wrapper.getLastRunOuput();
+		return wrapper.getLastRunOutput();
 	}
 
 	public VideoBuilder inputVideo(String fileName) {
@@ -47,4 +47,24 @@ public class VideoBuilder {
 		context.setToTime(toTime);
 		return this;
 	}
+
+	public VideoBuilder softTitles(String srtFile) {
+		wrapper.softTitles(
+				context.getInputVideoFileName(),
+				context.getOutputVideoFileName(),
+				srtFile,
+				"cze"
+		);
+		return this;
+	}
+
+	public VideoBuilder makeVideoFromPictureSeries(String fileNameNumbered) {
+		wrapper.makePictureSeries(
+				"1",
+				fileNameNumbered,
+				context.getOutputVideoFileName()
+		);
+		return this;
+	}
+
 }

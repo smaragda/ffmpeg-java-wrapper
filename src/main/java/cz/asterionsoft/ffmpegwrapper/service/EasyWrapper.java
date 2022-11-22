@@ -14,6 +14,21 @@ class EasyWrapper {
 
 
 	/**
+	 * ffmpeg -framerate 1 -i happy%d.jpg -c:v libx264 -r 30 output.mp4
+	 * -r framerate of output video
+	 * -framerate ... framerate of pictures
+	 *
+	 * @param durationSeconds  duration of each image in video
+	 * @param fileNameNumbered e.g. happy%d.jpg
+	 */
+	public void makePictureSeries(String durationSeconds, String fileNameNumbered, String outputVideo) {
+		commonRun("ffmpeg -framerate " + durationSeconds
+				+ " -i " + fileNameNumbered
+				+ " -c:v libx264" + " "
+				+ outputVideo);
+	}
+
+	/**
 	 * "ffmpeg -i input.mp4 -ss 00:05:20 -t 00:10:00 -c:v copy -c:a copy output1.mp4"
 	 *
 	 * @param input
@@ -61,11 +76,16 @@ class EasyWrapper {
 	}
 
 	private void commonRun(String template, String... paramsInCorrectOrder) {
-		String command = String.format(template, (Object[]) paramsInCorrectOrder);
+		String command;
+		if (paramsInCorrectOrder == null || paramsInCorrectOrder.length == 0) {
+			command = template;
+		} else {
+			command = String.format(template, (Object[]) paramsInCorrectOrder);
+		}
 		executor.run(command);
 	}
 
-	List<String> getLastRunOuput() {
+	List<String> getLastRunOutput() {
 		return executor.getLastRunOutput();
 	}
 }

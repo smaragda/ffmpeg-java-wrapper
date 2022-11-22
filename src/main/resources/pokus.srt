@@ -1,0 +1,7 @@
+1
+00:00:00,08 --> 00:00:02,000
+Sofinka se chystá na svou první hvězdu!
+
+2
+00:00:02,8 --> 00:00:4,000
+Hvězda je na světě!

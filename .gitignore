@@ -1,6 +1,8 @@
 *.mov
 *.mp4
 *.avi
+*.jpg
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

@@ -1,5 +1,6 @@
 package cz.asterionsoft.ffmpegwrapper.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * probably can not be parallelized! needs to finish step by step!
  */
+@Slf4j
 @Component
 class CmdExecutor {
 	private final List<String> lastRunOutput = new ArrayList<>();
@@ -33,13 +35,20 @@ class CmdExecutor {
 				}
 				System.out.println(line);
 				lastRunOutput.add(line);
+				validate(line);
 			}
 		} catch (IOException e) {
-			System.out.println("problem executing: " + e.getMessage());
+			log.error("problem executing: " + e.getMessage());
 		}
 	}
 
 	List<String> getLastRunOutput() {
 		return lastRunOutput;
+	}
+
+	private void validate(String line) throws IOException {
+		if (new OutputCondition(this).anyOfLinesSatisfies(s -> s.contains("No such file or directory"))) {
+			throw new IOException("Problem found in ffmpeg output: " + line);
+		}
 	}
 }

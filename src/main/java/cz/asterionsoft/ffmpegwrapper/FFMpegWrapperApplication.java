@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Slf4j
 @SpringBootApplication
-public class FFMpegWrapper {
+public class FFMpegWrapperApplication {
 
 	public static void main(String[] args) {
-		SpringApplication application = new SpringApplication(FFMpegWrapper.class);
+		SpringApplication application = new SpringApplication(FFMpegWrapperApplication.class);
 		application.run(args);
 	}
 }
