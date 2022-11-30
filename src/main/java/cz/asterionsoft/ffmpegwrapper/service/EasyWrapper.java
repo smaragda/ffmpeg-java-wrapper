@@ -14,6 +14,37 @@ class EasyWrapper {
 
 
 	/**
+	 * ffmpeg -i in.mp4 img%04d.png
+	 *
+	 * Potential conflict when using % in name.
+	 * @param picNameBase
+	 */
+	public void splitVideoToPictureSeries(String inputVideoPath, String picNameBase) {
+		commonRun(
+				"ffmpeg -i %s " + picNameBase + "%04d.png",
+				inputVideoPath
+		);
+	}
+
+
+	/**
+	 * ffmpeg -i video.mp4 -i audio.wav -map 0:v -map 1:a -c:v copy -shortest output.mp4
+	 * ffmpeg -i video.mp4 -i audio.wav -map 0:v -map 1:a -c:v copy output.mp4
+	 *
+	 * @param inputVideoPath
+	 * @param inputAudioPath
+	 * @param outputVideoPath
+	 */
+	public void replaceAudioInVideo(String inputVideoPath, String inputAudioPath, String outputVideoPath) {
+		commonRun(
+				"ffmpeg -i %s -i %s -map 0:v -map 1:a -c:v copy %s",
+				inputVideoPath,
+				inputAudioPath,
+				outputVideoPath
+		);
+	}
+
+	/**
 	 * ffmpeg -framerate 1 -i happy%d.jpg -c:v libx264 -r 30 output.mp4
 	 * -r framerate of output video
 	 * -framerate ... framerate of pictures
@@ -37,8 +68,13 @@ class EasyWrapper {
 	 * @param duration
 	 */
 	public void trim(String input, String output, String fromTime, String duration) {
-		commonRun("ffmpeg -i %s -ss %s -t %s -c:v copy -c:a copy %s",
-				input, fromTime, duration, output);
+		commonRun(
+				"ffmpeg -i %s -ss %s -t %s -c:v copy -c:a copy %s",
+				input,
+				fromTime,
+				duration,
+				output
+		);
 	}
 
 	public void convert(String input, String output) {

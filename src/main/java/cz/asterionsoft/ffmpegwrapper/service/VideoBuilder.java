@@ -26,8 +26,31 @@ public class VideoBuilder {
 		return this;
 	}
 
+	public VideoBuilder splitVideoInPictureSeries(String picBaseName) {
+		wrapper.splitVideoToPictureSeries(
+				context.getInputVideoFileName(),
+				picBaseName
+		);
+		return this;
+	}
+
+	public VideoBuilder markOutputAsInput() {
+		context.setInputVideoFileName(context.getOutputVideoFileName());
+		context.setOutputVideoFileName(null);
+		return this;
+	}
+
 	public VideoBuilder outputVideo(String fileName) {
 		context.setOutputVideoFileName(fileName);
+		return this;
+	}
+
+	public VideoBuilder replaceAudio(String audioFile) {
+		wrapper.replaceAudioInVideo(
+				context.getInputVideoFileName(),
+				audioFile,
+				context.getOutputVideoFileName()
+		);
 		return this;
 	}
 
