@@ -14,6 +14,10 @@ public class Context {
 	private String inputVideoFileName;
 	private String outputVideoFileName;
 
+	private String inputAudioFileName;
+	private String outputAudioFileName;
+
+
 	// ------------- BASED ON ACTIONS -------------
 	private String fromTime;
 	private String toTime;

@@ -26,6 +26,20 @@ public class VideoBuilder {
 		return this;
 	}
 
+	public VideoBuilder inputAudio(String fileName) {
+		context.setInputAudioFileName(fileName);
+		return this;
+	}
+
+	public VideoBuilder mergeTwoAudios(String audioFile2, String outputAudio) {
+		wrapper.mergeTwoAudios(
+				context.getInputAudioFileName(),
+				audioFile2,
+				outputAudio
+		);
+		return this;
+	}
+
 	public VideoBuilder splitVideoInPictureSeries(String picBaseName) {
 		wrapper.splitVideoToPictureSeries(
 				context.getInputVideoFileName(),
@@ -34,14 +48,34 @@ public class VideoBuilder {
 		return this;
 	}
 
-	public VideoBuilder markOutputAsInput() {
+	public VideoBuilder extractAudio(String outputAudio) {
+		context.setOutputAudioFileName(outputAudio);
+		wrapper.extractAudio(
+				context.getInputVideoFileName(),
+				context.getOutputAudioFileName()
+		);
+		return this;
+	}
+
+	public VideoBuilder markVideoOutputAsInput() {
 		context.setInputVideoFileName(context.getOutputVideoFileName());
 		context.setOutputVideoFileName(null);
 		return this;
 	}
 
+	public VideoBuilder markAudioOutputAsInput() {
+		context.setInputAudioFileName(context.getOutputAudioFileName());
+		context.setOutputAudioFileName(null);
+		return this;
+	}
+
 	public VideoBuilder outputVideo(String fileName) {
 		context.setOutputVideoFileName(fileName);
+		return this;
+	}
+
+	public VideoBuilder outputAudio(String fileName) {
+		context.setOutputAudioFileName(fileName);
 		return this;
 	}
 
@@ -82,7 +116,7 @@ public class VideoBuilder {
 	}
 
 	public VideoBuilder makeVideoFromPictureSeries(String fileNameNumbered) {
-		wrapper.makePictureSeries(
+		wrapper.makeVideoFromPictureSeries(
 				"1",
 				fileNameNumbered,
 				context.getOutputVideoFileName()

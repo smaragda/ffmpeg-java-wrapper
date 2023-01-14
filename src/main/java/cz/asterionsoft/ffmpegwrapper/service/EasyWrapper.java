@@ -12,11 +12,45 @@ class EasyWrapper {
 
 	private final CmdExecutor executor;
 
+	/**
+	 * Merge audio.
+	 * <p>
+	 * ffmpeg -i INPUT1 -i INPUT2 -i INPUT3 -filter_complex amix=inputs=3:duration=first:dropout_transition=3 OUTPUT
+	 */
+	public void mergeTwoAudios(String audioFile1, String audioFile2, String outputAudio) {
+		commonRun(
+				"ffmpeg -i %s -i %s -filter_complex amix=inputs=2:duration=first %s",
+				audioFile1,
+				audioFile2,
+				outputAudio
+		);
+	}
+
+	/**
+	 * Extracts whole audio from vide:
+	 * ffmpeg -i sample.avi -q:a 0 -map a sample.mp3
+	 * extract only trimmed part:
+	 * ffmpeg -i sample.avi -ss 00:03:05 -t 00:00:45.0 -q:a 0 -map a sample.mp3
+	 * extraction accrding to best answer:
+	 * ffmpeg -i input-video.avi -vn -acodec copy output-audio.aac
+	 *
+	 * @param inputVideoPath input video
+	 * @param outputAudio    output audio
+	 */
+	public void extractAudio(String inputVideoPath, String outputAudio) {
+		commonRun(
+				"ffmpeg -i %s -q:a 0 -map a %s",
+				inputVideoPath,
+				outputAudio
+		);
+	}
 
 	/**
 	 * ffmpeg -i in.mp4 img%04d.png
-	 *
+	 * <p>
 	 * Potential conflict when using % in name.
+	 *
+	 * @param inputVideoPath
 	 * @param picNameBase
 	 */
 	public void splitVideoToPictureSeries(String inputVideoPath, String picNameBase) {
@@ -52,7 +86,7 @@ class EasyWrapper {
 	 * @param durationSeconds  duration of each image in video
 	 * @param fileNameNumbered e.g. happy%d.jpg
 	 */
-	public void makePictureSeries(String durationSeconds, String fileNameNumbered, String outputVideo) {
+	public void makeVideoFromPictureSeries(String durationSeconds, String fileNameNumbered, String outputVideo) {
 		commonRun("ffmpeg -framerate " + durationSeconds
 				+ " -i " + fileNameNumbered
 				+ " -c:v libx264" + " "

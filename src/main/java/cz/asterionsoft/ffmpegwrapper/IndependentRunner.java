@@ -12,7 +12,7 @@ public class IndependentRunner {
 	public void run(ApplicationStartedEvent event) {
 		//addSoftTitles(event.getApplicationContext().getBean(VideoBuilder.class));
 		//pictureSeries(event.getApplicationContext().getBean(VideoBuilder.class));
-		reklamniVideo(event.getApplicationContext().getBean(VideoBuilder.class));
+		//reklamniVideo(event.getApplicationContext().getBean(VideoBuilder.class));
 	}
 
 	private void reklamniVideo(VideoBuilder builder) {
@@ -21,7 +21,7 @@ public class IndependentRunner {
 				.inputVideo(base + "pes-v-rodine-2.mp4")
 				.outputVideo(base + "titles.mp4")
 				.softTitles(base + "titulky.srt")
-				.markOutputAsInput()
+				.markVideoOutputAsInput()
 				.outputVideo(base + "final.mp4")
 				.replaceAudio(base + "petro-hatinova.mp3");
 	}
@@ -30,7 +30,7 @@ public class IndependentRunner {
 		builder
 				.outputVideo("/Users/janmarcis/source/ffmpeg-java-wrapper/src/main/resources/sofi-pic-series-3.mp4")
 				.makeVideoFromPictureSeries("/Users/janmarcis/source/ffmpeg-java-wrapper/src/main/resources/series%d.jpg")
-				.markOutputAsInput()
+				.markVideoOutputAsInput()
 				.outputVideo("/Users/janmarcis/source/ffmpeg-java-wrapper/src/main/resources/series-titles-1.mp4")
 				.softTitles("/Users/janmarcis/source/ffmpeg-java-wrapper/src/main/resources/titulky.srt");
 	}
