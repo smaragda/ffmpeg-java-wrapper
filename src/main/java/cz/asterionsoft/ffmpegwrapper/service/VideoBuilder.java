@@ -1,42 +1,29 @@
 package cz.asterionsoft.ffmpegwrapper.service;
 
+import cz.asterionsoft.ffmpegwrapper.exception.NotImplYet;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-@Service
 @RequiredArgsConstructor
-public class VideoBuilder {
+public class VideoBuilder implements Processor {
 	private final Context context;
 	private final EasyWrapper wrapper;
+	private MultimediaBuilder parent;
 
-
-	public VideoBuilder version() {
-		wrapper.version();
-		return this;
+	@Override
+	public MultimediaBuilder back() {
+		return parent;
 	}
 
-	public List<String> getLastRunOutput() {
-		return wrapper.getLastRunOutput();
-	}
-
-	public VideoBuilder inputVideo(String fileName) {
+	@Override
+	public VideoBuilder setInput(MultimediaBuilder parent, String fileName) {
+		this.parent = parent;
 		context.setInputVideoFileName(fileName);
 		return this;
 	}
 
-	public VideoBuilder inputAudio(String fileName) {
-		context.setInputAudioFileName(fileName);
-		return this;
-	}
-
-	public VideoBuilder mergeTwoAudios(String audioFile2, String outputAudio) {
-		wrapper.mergeTwoAudios(
-				context.getInputAudioFileName(),
-				audioFile2,
-				outputAudio
-		);
+	@Override
+	public VideoBuilder setOutput(String fileName) {
+		context.setOutputVideoFileName(fileName);
 		return this;
 	}
 
@@ -57,27 +44,13 @@ public class VideoBuilder {
 		return this;
 	}
 
-	public VideoBuilder markVideoOutputAsInput() {
+	@Override
+	public VideoBuilder markOutputAsInput() {
 		context.setInputVideoFileName(context.getOutputVideoFileName());
 		context.setOutputVideoFileName(null);
 		return this;
 	}
 
-	public VideoBuilder markAudioOutputAsInput() {
-		context.setInputAudioFileName(context.getOutputAudioFileName());
-		context.setOutputAudioFileName(null);
-		return this;
-	}
-
-	public VideoBuilder outputVideo(String fileName) {
-		context.setOutputVideoFileName(fileName);
-		return this;
-	}
-
-	public VideoBuilder outputAudio(String fileName) {
-		context.setOutputAudioFileName(fileName);
-		return this;
-	}
 
 	public VideoBuilder replaceAudio(String audioFile) {
 		wrapper.replaceAudioInVideo(
@@ -88,11 +61,13 @@ public class VideoBuilder {
 		return this;
 	}
 
+	@Override
 	public VideoBuilder convert() {
 		wrapper.convert(context.getInputVideoFileName(), context.getOutputVideoFileName());
 		return this;
 	}
 
+	@Override
 	public VideoBuilder trim(String fromTime, String toTime) {
 		wrapper.trim(
 				context.getInputVideoFileName(),
@@ -103,6 +78,16 @@ public class VideoBuilder {
 		context.setFromTime(fromTime);
 		context.setToTime(toTime);
 		return this;
+	}
+
+	@Override
+	public Processor merge(String secondFile, String outputFile) {
+		throw new NotImplYet();
+	}
+
+	@Override
+	public Processor append(String secondFile, String outputFile) {
+		throw new NotImplYet();
 	}
 
 	public VideoBuilder softTitles(String srtFile) {
