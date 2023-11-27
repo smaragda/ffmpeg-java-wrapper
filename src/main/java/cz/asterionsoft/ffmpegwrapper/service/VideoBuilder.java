@@ -2,7 +2,9 @@ package cz.asterionsoft.ffmpegwrapper.service;
 
 import cz.asterionsoft.ffmpegwrapper.exception.NotImplYet;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class VideoBuilder implements Processor {
 	private final Context context;

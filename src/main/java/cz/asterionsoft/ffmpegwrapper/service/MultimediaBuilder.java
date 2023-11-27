@@ -18,8 +18,8 @@ public class MultimediaBuilder {
 		return this;
 	}
 
-	public List<String> getLastRunOutput() {
-		return wrapper.getLastRunOutput();
+	public String getLastRunOutput() {
+		return wrapper.getLastRunOutputHTML();
 	}
 
 	public VideoBuilder useVideo(String videoFile) {
