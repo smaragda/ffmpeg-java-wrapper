@@ -11,8 +11,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 class EasyWrapper {
-
-    private static final String FFMPEG = "ffmpeg";
     private static final String PLACEHOLDER = "xxx";
 
     private final CmdExecutor executor;

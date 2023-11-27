@@ -24,7 +24,7 @@ public class FileService {
 
     @SneakyThrows
     public String copyFile(MultipartFile file) {
-        log.debug("copy file from temp to out");
+        log.debug("Copy file from temp to in directory.");
         Path target = Paths.get("in", file.getOriginalFilename());
         file.transferTo(target);
 
@@ -34,6 +34,7 @@ public class FileService {
     }
 
     public List<String> getFiles(String directory, String uuid) {
+        log.debug("Get files from {} directory and uuid {}.", directory, uuid);
         return Arrays
                 .asList(Objects.
                         requireNonNull(
