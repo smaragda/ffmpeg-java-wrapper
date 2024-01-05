@@ -1,12 +1,11 @@
 # Use a Maven base image to build the project
 FROM eclipse-temurin:21-jdk-alpine AS build
 
-# Copy the project files into the image
-COPY src /home/app/src
-COPY pom.xml /home/app
-
-# Set the working directory
-WORKDIR /home/app
+WORKDIR /usr/src/app
+COPY pom.xml .
+RUN mvn -B -e -C -T 1C org.apache.maven.plugins:maven-dependency-plugin:3.1.2:go-offline
+COPY . .
+RUN mvn -B -e -o -T 1C verify
 
 # Compile and package the application to an executable JAR file
 RUN mvn clean package
