@@ -1,9 +1,22 @@
+# Use a Maven base image to build the project
+FROM eclipse-temurin:21-jdk-alpine AS build
+
+# Copy the project files into the image
+COPY src /home/app/src
+COPY pom.xml /home/app
+
+# Set the working directory
+WORKDIR /home/app
+
+# Compile and package the application to an executable JAR file
+RUN mvn clean package
+
 # Use an official Ubuntu runtime as a parent image
 #FROM ubuntu:latest
 FROM eclipse-temurin:21-jdk
 
 # Set the maintainer label
-LABEL maintainer="your-email@example.com"
+LABEL maintainer="postmaster@asterionsoft.cz"
 
 # Update Ubuntu Software repository
 RUN apt update
@@ -11,20 +24,12 @@ RUN apt update
 # Install FFmpeg
 RUN apt install -y ffmpeg
 
-# Install OpenJDK 11
-#RUN apt install -y openjdk-11-jdk
-
-# Set JAVA_HOME environment variable
-#ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
-
-# Set PATH to include the Java bin directory
-#ENV PATH $JAVA_HOME/bin:$PATH
+# Copy the built JAR file from the build stage
+COPY --from=build /home/app/target/*.jar app.jar
 
 # The port the app runs on
 EXPOSE 8080
 
-# Copy the JAR file into the image
-COPY target/ffmpeg-java-wrapper-1.1-SNAPSHOT.jar app.jar
 
 # Command to run the application
 ENTRYPOINT ["java","-jar","/app.jar"]
