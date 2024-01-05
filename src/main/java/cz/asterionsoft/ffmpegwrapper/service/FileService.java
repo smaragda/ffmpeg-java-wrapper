@@ -25,11 +25,12 @@ public class FileService {
     @SneakyThrows
     public String copyFile(MultipartFile file) {
         log.debug("Copy file from temp to in directory.");
-        Path target = Paths.get("in", file.getOriginalFilename());
+        String uuid = UUID.randomUUID().toString();
+        String newName = uuid + "." + getSuffix(file.getOriginalFilename());
+        Path target = Paths.get("in", newName);
         file.transferTo(target);
 
-        String uuid = UUID.randomUUID().toString();
-        inputDb.add(new DbEntry(uuid, file.getOriginalFilename()));
+        inputDb.add(new DbEntry(uuid, newName, file.getOriginalFilename()));
         return uuid;
     }
 
@@ -43,5 +44,9 @@ public class FileService {
                                         .list((dir, name) -> name.contains(uuid))
                         )
                 );
+    }
+
+    private String getSuffix(String originalFilename) {
+        return originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
     }
 }

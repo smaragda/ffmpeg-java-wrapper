@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 public class MainController {
@@ -44,7 +45,7 @@ public class MainController {
     public ResponseEntity<DefaultResponse> pics(@PathVariable String uuid) {
         DbEntry dbEntry = inputDb.get(uuid);
         String output = builder
-                .useVideo("in/" + dbEntry.originalName())
+                .useVideo("in/" + dbEntry.newName())
                 .splitVideoInPictureSeries("out/" + uuid + "-pic")
                 .back()
                 .getLastRunOutput();

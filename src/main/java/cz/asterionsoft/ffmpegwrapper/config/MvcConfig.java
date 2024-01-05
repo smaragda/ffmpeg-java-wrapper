@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
 
-// TODO does not work!
 @Configuration
 @EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
