@@ -1,6 +1,6 @@
 package cz.asterionsoft.ffmpegwrapper.to;
 
-import java.util.List;
+import java.util.Set;
 
-public record DefaultResponse(String message, String status, String uuid, List<String> files) {
+public record DefaultResponse(String message, String status, String uuid, Set<String> files) {
 }

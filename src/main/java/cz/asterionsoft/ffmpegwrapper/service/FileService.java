@@ -10,10 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -34,9 +31,9 @@ public class FileService {
         return uuid;
     }
 
-    public List<String> getFiles(String directory, String uuid) {
+    public Set<String> getFiles(String directory, String uuid) {
         log.debug("Get files from {} directory and uuid {}.", directory, uuid);
-        return Arrays
+        List<String> unordered = Arrays
                 .asList(Objects.
                         requireNonNull(
                                 Paths.get(directory)
@@ -44,6 +41,7 @@ public class FileService {
                                         .list((dir, name) -> name.contains(uuid))
                         )
                 );
+        return new TreeSet<>(unordered);
     }
 
     private String getSuffix(String originalFilename) {
